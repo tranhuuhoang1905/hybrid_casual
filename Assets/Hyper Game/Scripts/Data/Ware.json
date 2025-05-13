@@ -1,0 +1,13 @@
+{
+    "waves": [
+        {
+            "enemies": ["Chicken"]
+        },
+        {
+            "enemies": ["Chicken", "Chicken"]
+        },
+        {
+            "enemies": ["Chicken", "Chicken", "Troll"]
+        }
+    ]
+}
