@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Hyper Game/Scenes/BattleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Hyper Game/Scenes/Main.unity
+    guid: 86e7cb45ebd77ff44b72d201bff92448
+  - enabled: 1
+    path: Assets/Hyper Game/Scenes/Map/Map1.unity
+    guid: 03872b6ed18f75f488ef084404b48908
+  - enabled: 1
+    path: Assets/Hyper Game/Scenes/Map/Map2.unity
+    guid: 78bbf9b23f490ab4999e7a1f25a2d052
   m_configObjects: {}

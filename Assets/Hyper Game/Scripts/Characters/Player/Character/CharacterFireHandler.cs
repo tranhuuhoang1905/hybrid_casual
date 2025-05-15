@@ -18,38 +18,38 @@ public class CharacterFireHandler : CharacterWeaponHandler
         InvokeRepeating("AutoFire", 1f, 1f);
     }
 
-    public void FireSkill()
-    {
-        if (!characterMovement.IsAlive) return;
-        if (GameManager.Instance.GetScore() < 20) return;
+    // public void FireSkill()
+    // {
+    //     if (!characterMovement.IsAlive) return;
+    //     if (GameManager.Instance.GetScore() < 20) return;
 
-        ScoreEntry scoreEntry = new ScoreEntry(ScoreType.Score, -20);
-        GameManager.Instance.AddToScore(scoreEntry);
+    //     ScoreEntry scoreEntry = new ScoreEntry(ScoreType.Score, -20);
+    //     GameManager.Instance.AddToScore(scoreEntry);
 
-        StartCoroutine(FireMultipleRounds());
-    }
+    //     StartCoroutine(FireMultipleRounds());
+    // }
 
-    IEnumerator FireMultipleRounds()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            FireBurst();
-            yield return new WaitForSeconds(0.2f);
-        }
-    }
+    // IEnumerator FireMultipleRounds()
+    // {
+    //     for (int i = 0; i < 3; i++)
+    //     {
+    //         FireBurst();
+    //         yield return new WaitForSeconds(0.2f);
+    //     }
+    // }
 
-    void FireBurst()
-    {
-        float angleStep = 360f / 20;
-        float startAngle = 0f;
-        spawnAuraEffect();
-        for (int i = 0; i < 20; i++)
-        {
-            float angle = startAngle + (angleStep * i);
-            Quaternion bulletRotation = Quaternion.Euler(0, 0, angle);
-            bulletSystem.SpawnBullet(bulletRotation);
-        }
-    }
+    // void FireBurst()
+    // {
+    //     float angleStep = 360f / 20;
+    //     float startAngle = 0f;
+    //     spawnAuraEffect();
+    //     for (int i = 0; i < 20; i++)
+    //     {
+    //         float angle = startAngle + (angleStep * i);
+    //         Quaternion bulletRotation = Quaternion.Euler(0, 0, angle);
+    //         bulletSystem.SpawnBullet(bulletRotation);
+    //     }
+    // }
 
     protected void spawnAuraEffect()
     {
@@ -73,13 +73,17 @@ public class CharacterFireHandler : CharacterWeaponHandler
         float direction = Mathf.Sign(transform.localScale.x);
         Quaternion baseRotation = direction > 0 ? Quaternion.identity : Quaternion.Euler(0, 180, 0);
 
-        // Lấy vị trí chuột trong thế giới
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
-
-        // Tính hướng từ nhân vật đến chuột
-        Vector2 directionToMouse = (mousePosition - bulletSystem.transform.position).normalized;
+        Transform enemy =  GetClosestEnemy();
+        if (enemy == null)
+        {
+            return;
+        }
+        Vector3 enemyPosition =  enemy.position;
+        enemyPosition.z = 0;
+        
+        Vector2 directionToMouse = (enemyPosition - bulletSystem.transform.position).normalized;
         float baseAngle = Mathf.Atan2(directionToMouse.y, directionToMouse.x) * Mathf.Rad2Deg;
+        
 
         // Xác định số viên đạn bắn ra theo level
         int bulletsToShoot = level; // Mỗi level tăng 1 viên, level 1 bắn 1 viên
@@ -98,6 +102,26 @@ public class CharacterFireHandler : CharacterWeaponHandler
             bulletSystem.SpawnBullet(bulletRotation);
         }
     }
+
+    Transform GetClosestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        Transform closest = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                closest = enemy.transform;
+            }
+        }
+
+        return closest;
+    }
+
     private Vector3 FindPositionAttack(Transform enemy){
         Transform healthBar = enemy.transform.Find("Canvas");
         if (!healthBar) return enemy.transform.position;

@@ -7,13 +7,16 @@ public class AudioManager : MonoBehaviour
     private AudioSource musicSource; // AudioSource để phát nhạc nền
     [SerializeField] private AudioClip backgroundMusic; // Nhạc nền mặc định
 
+    [SerializeField] private AudioClip buttonClickSFX; // gán clip "bit bit" vào đây
+    private AudioSource sfxSource; // AudioSource riêng để phát SFX
+
     private void Awake()
     {
         // Singleton: Giữ lại `AudioManager` khi chuyển Scene
         if (Instance == null)
         {
             Instance = this;
-            // DontDestroyOnLoad(gameObject); // Không hủy khi chuyển Scene
+            DontDestroyOnLoad(gameObject); // Không hủy khi chuyển Scene
         }
         else
         {
@@ -37,6 +40,11 @@ public class AudioManager : MonoBehaviour
         {
             PlayMusic(backgroundMusic);
         }
+
+        sfxSource = gameObject.AddComponent<AudioSource>();
+        sfxSource.loop = false;
+        sfxSource.playOnAwake = false;
+        sfxSource.volume = 1f;
     }
 
     // Hàm phát nhạc nền mới
@@ -59,4 +67,21 @@ public class AudioManager : MonoBehaviour
     {
         musicSource.Stop();
     }
+
+    // Phát tiếng "bit bit" mặc định khi bấm nút
+    public void PlayButtonClick()
+    {
+        Debug.Log("check click");
+        PlaySFX(buttonClickSFX);
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        if (clip != null)
+        {
+            sfxSource.PlayOneShot(clip);
+        }
+    }
+
+    
 }

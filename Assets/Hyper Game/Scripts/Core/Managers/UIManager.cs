@@ -10,16 +10,10 @@ public class UIManager : MonoBehaviour
     
     public static UIManager Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private TextMeshProUGUI nextWare;
-    [SerializeField] private TextMeshProUGUI nextWareName;
-    [SerializeField] private TextMeshProUGUI timeText;
     // [SerializeField] private TextMeshProUGUI timeFinalText;
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameObject mainUI;
-    [SerializeField] private GameObject NotifyNextWare;
-    private int nextWareTime = 10;
-    private Coroutine nextWareCoroutine;
     private BlinkEffect blinkEffect;
     private float sliderValue = 0f;
     private Dictionary<WareType, string> wareNames = new Dictionary<WareType, string>
@@ -40,29 +34,16 @@ public class UIManager : MonoBehaviour
 
         Instance = this;
         // DontDestroyOnLoad(gameObject);
-        // blinkEffect = NotifyNextWare.GetComponent<BlinkEffect>();
     }
     void Start(){
         
         HideAllPopup();
-        // RestartNextWareCountdown();
         
     }
     void Update(){
         slider.value = sliderValue;
     }
 
-    public void RestartNextWareCountdown()
-    {
-        // blinkEffect.StopBlinking();
-        // Nếu coroutine đang chạy, dừng nó trước khi chạy lại
-        // if (nextWareCoroutine != null)
-        // {
-        //     StopCoroutine(nextWareCoroutine);
-        // }
-
-        // nextWareCoroutine = StartCoroutine(NextWareCountdown()); // Khởi chạy lại
-    }
 
     public void HideAllPopup()
     {
@@ -73,68 +54,23 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    private IEnumerator NextWareCountdown()
-    {
-        while (nextWareTime > 0) // Chạy khi nextWareTime lớn hơn 0
-        {
-            yield return new WaitForSeconds(1f); // Đợi 1 giây
-            nextWareTime--; // Giảm thời gian
-            if (nextWareTime<=3)
-            {
-                blinkEffect.StartBlinking();
-            }
-            UpdateNextWareUI(nextWareTime); // Cập nhật giao diện
-        }
-    }
     void OnEnable()
     {
         ScoreEvent.OnScoreUpdated += UpdateScoreUI;
-        ScoreEvent.OnTimeUpdated += UpdateTimeUI;
         ScoreEvent.OnExpUpdated += UpdateExpBarUI;
-        GameEvents.OnNextWarWare += SetNextWareTime;
         GameEvents.OnGameOver += ShowWinUI;
     }
 
     void OnDisable()
     {
         ScoreEvent.OnScoreUpdated -= UpdateScoreUI;
-        ScoreEvent.OnTimeUpdated -= UpdateTimeUI;
         ScoreEvent.OnExpUpdated -= UpdateExpBarUI;
-        GameEvents.OnNextWarWare -= SetNextWareTime;
         GameEvents.OnGameOver -= ShowWinUI;
     }
-
-    public void SetNextWareTime(int newTime, WareType wareType)
-    {
-        if (wareNames.TryGetValue(wareType, out string name))
-        {
-            nextWareName.text = name;
-        }
-        nextWareTime = newTime; 
-        RestartNextWareCountdown();
-        UpdateNextWareUI(nextWareTime); 
-    }
-
-    private void UpdateNextWareUI(int nextWareTime)
-    {
-        int minutes = Mathf.FloorToInt(nextWareTime / 60);
-        int seconds = Mathf.FloorToInt(nextWareTime % 60);
-        nextWare.text = string.Format("{0:0}:{1:00}", minutes, seconds);
-
-    }
-
-    
 
     private void UpdateScoreUI(int newScore)
     {
         scoreText.text = newScore.ToString();
-    }
-
-    private void UpdateTimeUI(int newTime)
-    {
-        int minutes = Mathf.FloorToInt(newTime / 60);
-        int seconds = Mathf.FloorToInt(newTime % 60);
-        timeText.text = string.Format("{0:0}:{1:00}", minutes, seconds);
     }
 
     public void UpdateExpBarUI(int currentValue, int maxValue, int newLevel)
@@ -163,10 +99,8 @@ public class UIManager : MonoBehaviour
         if (winUI) 
         {
             winUI.SetActive(true);
-            TextMeshProUGUI timeFinalText = winUI.transform.Find("Popup/Time_Panel/Time/TimeValue")?.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI scoreFinalText = winUI.transform.Find("Popup/ScorePanel/Score/ScoreValue")?.GetComponent<TextMeshProUGUI>();
             if(scoreFinalText) scoreFinalText.text = scoreText.text;
-            if(timeFinalText) timeFinalText.text = timeText.text;
         }
         Time.timeScale = 0f;
     }

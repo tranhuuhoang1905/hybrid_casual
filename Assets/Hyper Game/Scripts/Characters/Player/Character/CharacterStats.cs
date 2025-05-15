@@ -8,6 +8,7 @@ public class CharacterStats
     public Attr statsUpLevel;
     public Attr statsBonus;
     public Attr bonusStats;
+    public Attr mapBonusStats;
     
     public Attr itemBonus;
 
@@ -26,16 +27,26 @@ public class CharacterStats
         );
         
         statsUpLevel =new Attr(
+            damage: 1,
+            attack: 1,
+            swordAttack: 1,
+            attackSpeed: 0.2f,
+            swordSpeed: 2f,
+            moveSpeed: 1f,
+            armor: 1,
+            health: 20
+        );
+        bonusStats =new Attr(
             damage: 0,
             attack: 0,
             swordAttack: 0,
-            attackSpeed: 0.3f,
-            swordSpeed: 0.2f,
+            attackSpeed: 0f,
+            swordSpeed: 0f,
             moveSpeed: 0f,
-            armor: 1,
-            health: 25
+            armor: 0,
+            health: 0
         );
-        bonusStats =new Attr(
+        mapBonusStats =new Attr(
             damage: 0,
             attack: 0,
             swordAttack: 0,
@@ -48,7 +59,7 @@ public class CharacterStats
         itemBonus = new Attr();
     }
 
-    public Attr TotalStats => baseStats + itemBonus;
+    public Attr TotalStats => baseStats + bonusStats+ itemBonus + mapBonusStats;
 
     public void SetLevel(int newLevel)
     {
@@ -86,5 +97,10 @@ public class CharacterStats
     public void BonusSwordSpeed(float value)
     {
         bonusStats.swordSpeed += value;
+    }
+
+    public void MapBonusBonusAdd(Attr attack)
+    {
+        mapBonusStats = mapBonusStats + attack;
     }
 }

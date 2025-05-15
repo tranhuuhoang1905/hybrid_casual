@@ -5,6 +5,7 @@ public class GameEvents : MonoBehaviour
 {
     public static event Action OnGameOver;
     public static event Action OnLevelUp;
+    public static event Action<bool> OnWinEvent;
     public static event Action<Vector3, int,FloatingType> OnShowFloatingText;
     public static event Action<int> OnNomalWareSpawn;
     public static event Action<int> OnWarWareSpawn;
@@ -15,6 +16,11 @@ public class GameEvents : MonoBehaviour
     public static void GameOver()
     {
         OnGameOver?.Invoke();
+    }
+
+    public static void WinEvent(bool status)
+    {
+        OnWinEvent?.Invoke(status);
     }
 
     public static void LevelUp()

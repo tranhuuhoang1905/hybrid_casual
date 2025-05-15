@@ -10,7 +10,6 @@ public class Character : MonoBehaviour
     public int exp = 0;
     private int health = 100;
     private int maxHealth = 100;
-    private int[] expToLevelUp = { 0, 5, 10, 20, 30, 50, 65, 80, 100, 120, 245, 175,200,230,260,290,330,370,420,460,500 };
     public CharacterStats stats;
     protected SliderBar healthBar;
     private CharacterMovement characterMovement;
@@ -36,9 +35,8 @@ public class Character : MonoBehaviour
 
     void Start()
     {
-        stats = new CharacterStats(level); 
-        health = stats.TotalStats.health;
-        StatsRefresh.Refresh(stats.TotalStats);
+        ApplyDataFromGameManager();
+        
         RefreashHealth();
         StartCoroutine(WaitForSwordManagerAndLoadWeapon());
     }
@@ -67,20 +65,6 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void AddExp(int amount)
-    {
-        exp += amount;
-        while (level < expToLevelUp.Length - 1 && exp >= GetMaxExp())
-        {
-            exp -= GetMaxExp();
-            LevelUp();
-        }
-        exp = Mathf.Min(exp, GetMaxExp());
-        
-        GameEvents.ShowFloatingText(transform.position, amount,FloatingType.AddExp);
-        ScoreEvent.RaiseExpUpdated(exp, GetMaxExp(), level);
-    }
-
     public void AddHealth(int amount)
     {
         health = Mathf.Min(health + amount,maxHealth);
@@ -96,26 +80,6 @@ public class Character : MonoBehaviour
     public void AddFireLevel(int amount)
     {
         characterFireHandler.LevelUp(amount); 
-    }
-
-    public int GetMaxExp()
-    {
-        return expToLevelUp[level];
-    }
-
-    private void LevelUp()
-    {
-        level++;
-        stats.SetLevel(level);
-        health = stats.TotalStats.health;
-        RefreashHealth();
-        StatsRefresh.Refresh(stats.TotalStats);
-        if (levelUpEffect!= null)
-        {
-            GameObject effectInstance = Instantiate(levelUpEffect, transform.position, Quaternion.identity);
-            effectInstance.transform.SetParent(transform,true);
-        }
-        StartCoroutine(DelayShowLevelUpPopup());
     }
 
     private IEnumerator DelayShowLevelUpPopup()
@@ -166,5 +130,27 @@ public class Character : MonoBehaviour
         characterMovement.Die();
         GameEvents.GameOver();
     }
+    
+    public void ApplyDataFromGameManager()
+    {
+        level = GameManager.Instance.playerData.level;
+        exp = GameManager.Instance.playerData.exp;
+        stats = GameManager.Instance.playerData.stats;
+        
+        health = stats.TotalStats.health;
 
+        RefreashHealth();
+        StatsRefresh.Refresh(stats.TotalStats);
+    }
+
+    public void SetLevel(int value)
+    {
+        level  = value;
+    }
+
+    public void SetExp(int value)
+    {
+        exp  = value;
+    }
+    
 }
