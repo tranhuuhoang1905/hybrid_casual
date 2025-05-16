@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 7636057029341332109}
   - component: {fileID: 8182426585978657814}
   - component: {fileID: 389433485215970874}
+  - component: {fileID: 2673139591382824258}
   m_Layer: 5
   m_Name: Character Avatar
   m_TagString: Untagged
@@ -153,6 +154,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2673139591382824258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 571132021201987241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 225360f14f6c95f47880da08c339451a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level_ui: {fileID: 3588997106482265634}
+  slider: {fileID: 6924588547144142541}
 --- !u!1 &756128560514095804
 GameObject:
   m_ObjectHideFlags: 0
@@ -349,8 +364,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 2.2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2261205263668406963}
   - {fileID: 8313558778990245710}
+  - {fileID: 2261205263668406963}
   m_Father: {fileID: 7636057029341332109}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

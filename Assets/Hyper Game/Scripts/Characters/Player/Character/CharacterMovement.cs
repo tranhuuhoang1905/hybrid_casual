@@ -66,16 +66,8 @@ public class CharacterMovement : MonoBehaviour
 
     void Run()
     {
-        // Lấy input di chuyển
-        Vector3 moveDirection = new Vector3(moveInput.x, moveInput.y, 0);
-
-        // Chuẩn hóa hướng di chuyển để tránh tốc độ lớn hơn 5px/s khi di chuyển chéo
-        if (moveDirection.magnitude > 1)
-        {
-            moveDirection.Normalize();
-        }
-        // Di chuyển với tốc độ 5px/s
-        transform.Translate(moveDirection * runSpeed * Time.deltaTime);
+        Vector2 moveDir = moveInput.normalized;
+        myRigidbody.MovePosition(myRigidbody.position + moveDir * runSpeed * Time.fixedDeltaTime);
 
         bool playerHasHorizontalSpeed = moveInput.x !=0 || moveInput.y != 0;
         myAnimator.SetBool("IsRunning", playerHasHorizontalSpeed);

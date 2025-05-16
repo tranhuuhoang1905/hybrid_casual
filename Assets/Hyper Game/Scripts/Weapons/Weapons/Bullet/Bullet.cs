@@ -9,6 +9,7 @@ public class Bullet : BulletBase
         BulletSoundManager soundManager = GetComponent<BulletSoundManager>();
         BulletMovement movement = GetComponent<BulletMovement>();
         Initialize(soundManager, movement);
+
     }
     protected override void HandleCollision(Collision2D other)
     {
@@ -21,7 +22,10 @@ public class Bullet : BulletBase
                 HandleHitEffect(other);
                 soundManager?.PlayHitSound();
                 enemy.TakeDamage(damage);
-                ApplyAreaDamage(other.transform.position, 1.0f,other.gameObject); 
+                if (isAOE)
+                {
+                    ApplyAreaDamage(other.transform.position, 1.0f,other.gameObject); 
+                }
             }
         }
     }

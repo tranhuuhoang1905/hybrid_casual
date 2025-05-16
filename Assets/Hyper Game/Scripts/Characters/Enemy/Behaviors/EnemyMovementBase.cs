@@ -13,6 +13,12 @@ public class EnemyMovementBase : MonoBehaviour
     protected Transform player;
     protected Monster monster;
     protected GameObject bodyMonster;
+    private Rigidbody2D rb;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
 
     protected virtual void Start()
     {
@@ -35,8 +41,9 @@ public class EnemyMovementBase : MonoBehaviour
 
     protected virtual void Move()
     {
-        Vector2 direction = (player.position - transform.position ).normalized;
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        Vector2 direction = (player.position - transform.position).normalized;
+        rb.MovePosition(rb.position + direction * moveSpeed * Time.fixedDeltaTime);
+
         FlipEnemyFacing(direction.x);
     }
 

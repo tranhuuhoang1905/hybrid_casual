@@ -5,17 +5,14 @@ using TMPro;
 
 public class MainMenuController : MonoBehaviour
 {
-    private int level = 3;
-    private int exp = 0;
-    private int maxExp = 0;
+    private int score = 0;
     
     [SerializeField] private AudioClip StartScenebackgroundMusic; // Nhạc nền mặc định
     // public SceneSignal sceneSignal;
 
     [SerializeField] private GameObject AttrUI;
-    [SerializeField] private TextMeshProUGUI level_ui;
-    [SerializeField] private Slider slider;
-    private CharacterStats stats;
+    [SerializeField] private TextMeshProUGUI score_ui;
+    GameManager gameManager;
 
     void Start()
     {
@@ -23,11 +20,23 @@ public class MainMenuController : MonoBehaviour
         {
             AudioManager.Instance.PlayMusic(StartScenebackgroundMusic);
         }
-        GameManager.Instance.SetMapId(0);
+        gameManager = GameManager.Instance;
+        gameManager.ClearMapBonus();
+        gameManager.SetMapId(0);
+
         
-        Debug.Log($"Check mapid: {GameManager.Instance.GetMapId()}");
         ApplyDataFromGameManager();
-        RefreshUI();
+        
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.OnRefreshPlayerData += ApplyDataFromGameManager;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnRefreshPlayerData -= ApplyDataFromGameManager;
     }
             
     public void OnStartButtonPressed()
@@ -51,22 +60,12 @@ public class MainMenuController : MonoBehaviour
 
     void RefreshUI()
     {
-        level_ui.text = level.ToString();
-        float sliderValue = 1f;
-        if (maxExp != 0)
-        {
-            sliderValue = (float)exp / maxExp; // Ép kiểu float
-            sliderValue = Mathf.Round(sliderValue * 100f) / 100f;
-        }
-        Debug.Log($"check sliderValue{sliderValue}");
-        slider.value = sliderValue;
+        score_ui.text = score.ToString();
     }
 
     public void ApplyDataFromGameManager()
     {
-        level = GameManager.Instance.playerData.level;
-        exp = GameManager.Instance.playerData.exp;
-        maxExp = GameManager.Instance.playerData.GetMaxExp();
-        stats = GameManager.Instance.playerData.stats;
+        score = GameManager.Instance.GetScore();
+        RefreshUI();
     }
 }

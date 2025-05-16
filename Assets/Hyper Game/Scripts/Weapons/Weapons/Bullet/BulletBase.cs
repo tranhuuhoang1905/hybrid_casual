@@ -4,10 +4,12 @@ public abstract class BulletBase : MonoBehaviour
 {
     [SerializeField] protected float bulletSpeed = 10f;
     [SerializeField] protected int damage = 1;
+    [SerializeField] protected bool isAOE = false;
 
     protected BulletSoundManager soundManager;
     private BulletMovement movement;
     [SerializeField] private GameObject hitEffect;
+    private bool active = true;
     
 
     // void Start()
@@ -37,9 +39,9 @@ public abstract class BulletBase : MonoBehaviour
 
     protected virtual void HandleCollision(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && active)
         {
-
+            active = false;
             EnemyBase enemy = other.gameObject.GetComponent<EnemyBase>();
             if (enemy != null)
             {
@@ -50,8 +52,6 @@ public abstract class BulletBase : MonoBehaviour
         }
     }
 
-    
-
     protected virtual void HandleHitEffect(Collision2D taget)
     {
         if ( hitEffect !=null)
@@ -60,10 +60,13 @@ public abstract class BulletBase : MonoBehaviour
         }
     }
     
-    
-
     public virtual void SetDamage(int newDamage)
     {
         damage = newDamage;
+    }
+
+    public virtual void SetIsAOE(bool status)
+    {
+        isAOE = status;
     }
 }

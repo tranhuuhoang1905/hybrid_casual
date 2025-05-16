@@ -3,7 +3,7 @@ using System;
 public class ScoreEvent
 {
     public static event Action<ScoreEntry> OnAddScore;
-    public static event Action<int, int, int> OnExpUpdated;
+    // public static event Action<int, int, int> OnExpUpdated;
     public static event Action<int> OnScoreUpdated;
     
 
@@ -18,9 +18,9 @@ public class ScoreEvent
     }
 
 
-    public static void RaiseExpUpdated(int newScore,int maxScore,int newLevel)
-    {
-        OnExpUpdated?.Invoke(newScore,maxScore,newLevel);
-    }
+    // public static void RaiseExpUpdated(int newScore,int maxScore,int newLevel)
+    // {
+    //     OnExpUpdated?.Invoke(newScore,maxScore,newLevel);
+    // }
     
 }

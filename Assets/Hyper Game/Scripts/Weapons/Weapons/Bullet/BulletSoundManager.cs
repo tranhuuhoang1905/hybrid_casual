@@ -6,17 +6,19 @@ public class BulletSoundManager : MonoBehaviour
 {
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private AudioClip shootSound;
-    private AudioSource audioSource;
+    // private AudioSource audioSource;
 
     void Awake()
     {
-        audioSource = gameObject.AddComponent<AudioSource>();
+        // audioSource = gameObject.AddComponent<AudioSource>();
     }
     public void PlayShootSound()
     {
         if (shootSound != null)
         {
-            AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, 0.3f);
+            
+            AudioManager.Instance.PlaySFX(shootSound);
+            // AudioSource.PlayClipAtPoint(shootSound, Camera.main.transform.position, 0.3f);
         }
     }
 
@@ -24,7 +26,8 @@ public class BulletSoundManager : MonoBehaviour
     {
         if (hitSound != null)
         {
-            AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, 0.3f);
+            AudioManager.Instance.PlaySFX(hitSound);
+            // AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position, 0.3f);
 
         }
     }

@@ -14,11 +14,11 @@ public static class SaveManager
 
     public static PlayerData LoadPlayer()
     {
-        if (File.Exists(SavePath))
-        {
-            string json = File.ReadAllText(SavePath);
-            return JsonUtility.FromJson<PlayerData>(json);
-        }
+        // if (File.Exists(SavePath))
+        // {
+        //     string json = File.ReadAllText(SavePath);
+        //     return JsonUtility.FromJson<PlayerData>(json);
+        // }
 
         Debug.Log("No save found, creating new data");
         return new PlayerData();

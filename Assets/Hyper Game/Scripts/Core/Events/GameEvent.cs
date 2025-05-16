@@ -5,6 +5,7 @@ public class GameEvents : MonoBehaviour
 {
     public static event Action OnGameOver;
     public static event Action OnLevelUp;
+    public static event Action OnRefreshPlayerData;
     public static event Action<bool> OnWinEvent;
     public static event Action<Vector3, int,FloatingType> OnShowFloatingText;
     public static event Action<int> OnNomalWareSpawn;
@@ -27,6 +28,12 @@ public class GameEvents : MonoBehaviour
     {
         OnLevelUp?.Invoke();
     }
+    
+    public static void RefreshPlayerData()
+    {
+        OnRefreshPlayerData?.Invoke();
+    }
+    
     
     public static void ShowFloatingText(Vector3 position,int value,FloatingType type)
     {

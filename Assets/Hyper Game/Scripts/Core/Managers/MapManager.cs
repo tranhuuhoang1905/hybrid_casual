@@ -6,11 +6,8 @@ using TMPro;
 
 public class MapManager : MonoBehaviour
 {
-    private int level = 3;
-    private int exp = 0;
-    private int maxExp = 0;
-    [SerializeField] private TextMeshProUGUI level_ui;
-    [SerializeField] private Slider slider;
+    private int score = 0;
+    [SerializeField] private TextMeshProUGUI score_ui;
     [SerializeField] private AudioClip StartScenebackgroundMusic; // Nhạc nền mặc định
     // public SceneSignal sceneSignal;
 
@@ -27,9 +24,19 @@ public class MapManager : MonoBehaviour
         
         updateMapID();
         ApplyDataFromGameManager();
-        RefreshUI();
         Debug.Log($"Check mapid: {GameManager.Instance.GetMapId()}");
     }
+
+    private void OnEnable()
+    {
+        GameEvents.OnRefreshPlayerData += ApplyDataFromGameManager;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnRefreshPlayerData -= ApplyDataFromGameManager;
+    }
+
     void updateMapID()
     {
         int map_id = GameManager.Instance.GetMapId();
@@ -38,23 +45,13 @@ public class MapManager : MonoBehaviour
 
     void RefreshUI()
     {
-        level_ui.text = level.ToString();
-        float sliderValue = 1f;
-        if (maxExp != 0)
-        {
-            sliderValue = (float)exp / maxExp; // Ép kiểu float
-            sliderValue = Mathf.Round(sliderValue * 100f) / 100f;
-        }
-        Debug.Log($"check sliderValue{sliderValue}");
-        slider.value = sliderValue;
+        score_ui.text = score.ToString();
     }
 
     public void ApplyDataFromGameManager()
     {
-        level = GameManager.Instance.playerData.level;
-        exp = GameManager.Instance.playerData.exp;
-        maxExp = GameManager.Instance.playerData.GetMaxExp();
-        stats = GameManager.Instance.playerData.stats;
+        score = GameManager.Instance.GetScore();
+        RefreshUI();
     }
 
     

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public ScoreEvent ScoreEvent;
     private int playerType = 1;
-    private int score = 0;
+    // private int score = 0;
     private int map_id = 0;
     private Character character;
     public SceneSignal sceneSignal;
@@ -35,9 +35,10 @@ public class GameManager : MonoBehaviour
 
     void Start() 
     {
-        RefreshUI();
         playerData = SaveManager.LoadPlayer();
-        Debug.Log($"check playerData.level:{playerData.level}");
+        
+        character = FindObjectOfType<Character>();
+        RefreshUI();
     }
 
     void OnApplicationQuit()
@@ -57,51 +58,44 @@ public class GameManager : MonoBehaviour
 
     public void AddToScore(ScoreEntry scoreEntry)
     {
-        if (character != null)
+        switch (scoreEntry.scoreType)
         {
-            switch (scoreEntry.scoreType)
-            {
-                case ScoreType.Score:
-                    score += scoreEntry.value; // Cộng vào điểm số
-                    ScoreEvent.RaiseScoreUpdated(score);
-                    break;
-                case ScoreType.Experience:
-                    playerData.AddExp(scoreEntry.value); 
-
-                    if (character != null)
-                    {
-                        character.SetLevel(playerData.level); 
-                        character.SetExp(playerData.exp);
-                    }
-                    ScoreEvent.RaiseExpUpdated(playerData.exp, playerData.GetMaxExp(), playerData.level);
-                    break;
-                case ScoreType.Health:
-                    if (character != null)
-                    {
-                        character.AddHealth(scoreEntry.value);
-                    }
-                    break;
-                case ScoreType.SwordUpgrade:
-                    if (character != null)
-                    {
-                        character.AddSwordLevel(scoreEntry.value);
-                    }
-                    break;
-                default:
-                    break;
-            }
+            case ScoreType.Score:
+            Debug.Log("check AddToScore: score");
+                // score += scoreEntry.value; // Cộng vào điểm số
+                playerData.AddScore(scoreEntry.value);
+                GameEvents.RefreshPlayerData();
+                break;
+            case ScoreType.Experience:
+                playerData.AddExp(scoreEntry.value);
+                GameEvents.RefreshPlayerData();
+                break;
+            case ScoreType.Health:
+                if (character != null)
+                {
+                    character.AddHealth(scoreEntry.value);
+                }
+                break;
+            case ScoreType.SwordUpgrade:
+                if (character != null)
+                {
+                    character.AddSwordLevel(scoreEntry.value);
+                }
+                break;
+            default:
+                break;
         }
     }
 
     public void RefreshUI()
     {
-        ScoreEvent.RaiseScoreUpdated(score);
-        
-        character = FindObjectOfType<Character>();
-        if (character != null)
-        {
-            character.ApplyDataFromGameManager();
-        }
+        // ScoreEvent.RaiseScoreUpdated(score);
+        GameEvents.RefreshPlayerData();
+        // character = FindObjectOfType<Character>();
+        // if (character != null)
+        // {
+        //     character.ApplyDataFromGameManager();
+        // }
     }
     public void SetPlayerType(int type)
     {
@@ -115,7 +109,7 @@ public class GameManager : MonoBehaviour
     
     public int GetScore()
     {
-        return score;
+        return playerData.GetScore();
     }
 
     public CharacterStats GetCurrentStats()
@@ -132,4 +126,10 @@ public class GameManager : MonoBehaviour
         return map_id;
     }
 
+    public bool ClearMapBonus()
+    {
+        return playerData.ClearMapBonus();
+    }
+
+    
 }

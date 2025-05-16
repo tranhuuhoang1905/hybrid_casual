@@ -205,7 +205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412131134}
         m_TargetAssemblyTypeName: AttrPopup, Assembly-CSharp
         m_MethodName: OnClickUpgradeStat
         m_Mode: 5
@@ -1037,7 +1037,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412131134}
         m_TargetAssemblyTypeName: AttrPopup, Assembly-CSharp
         m_MethodName: OnClickUpgradeStat
         m_Mode: 5
@@ -2736,8 +2736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartScenebackgroundMusic: {fileID: 8300000, guid: 7990405559676af44a57baecd5f54368, type: 3}
   AttrUI: {fileID: 1412131132}
-  level_ui: {fileID: 1150818736}
-  slider: {fileID: 1150818735}
+  score_ui: {fileID: 1759950289}
 --- !u!1 &927026418
 GameObject:
   m_ObjectHideFlags: 0
@@ -3848,28 +3847,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7636057029341332109, guid: 5770edb6f5b019d44bd08af0c5946b23, type: 3}
   m_PrefabInstance: {fileID: 1150818733}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1150818735 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6924588547144142541, guid: 5770edb6f5b019d44bd08af0c5946b23, type: 3}
-  m_PrefabInstance: {fileID: 1150818733}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1150818736 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3588997106482265634, guid: 5770edb6f5b019d44bd08af0c5946b23, type: 3}
-  m_PrefabInstance: {fileID: 1150818733}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1165944266
 GameObject:
   m_ObjectHideFlags: 0
@@ -6443,8 +6420,6 @@ MonoBehaviour:
   speed: {fileID: 2087873953}
   attack_speed: {fileID: 235491769}
   bonus_attr_points: {fileID: 1008505369}
-  level_ui: {fileID: 0}
-  slider: {fileID: 0}
 --- !u!1 &1456991808
 GameObject:
   m_ObjectHideFlags: 0
@@ -6819,7 +6794,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412131134}
         m_TargetAssemblyTypeName: AttrPopup, Assembly-CSharp
         m_MethodName: OnClickUpgradeStat
         m_Mode: 5
@@ -7983,7 +7958,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412131134}
         m_TargetAssemblyTypeName: AttrPopup, Assembly-CSharp
         m_MethodName: OnClickUpgradeStat
         m_Mode: 5
@@ -8250,7 +8225,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1412131134}
         m_TargetAssemblyTypeName: AttrPopup, Assembly-CSharp
         m_MethodName: OnClickUpgradeStat
         m_Mode: 5
@@ -9755,6 +9730,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6970160059819736295, guid: bada41225043b2a4d8ea10456987c2fb, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 4913231668950465253, guid: a54dedb44fc8e1740bbcbd3784d9bd10, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

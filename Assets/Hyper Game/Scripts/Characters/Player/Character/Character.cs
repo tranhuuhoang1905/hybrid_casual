@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
     private CharacterFireHandler characterFireHandler;
     private IHitEffect hitEffect;
     [SerializeField] private GameObject levelUpEffect;
+    GameManager gameManager;
 
     void Awake()
     {
@@ -31,10 +32,13 @@ public class Character : MonoBehaviour
         characterSwordHandler = GetComponent<CharacterSwordHandler>();
         characterFireHandler= GetComponent<CharacterFireHandler>();
         hitEffect = GetComponent<IHitEffect>();
+        
     }
 
     void Start()
     {
+        gameManager = GameManager.Instance;
+        Debug.Log("check start ApplyDataFromGameManager");
         ApplyDataFromGameManager();
         
         RefreashHealth();
@@ -49,7 +53,7 @@ public class Character : MonoBehaviour
     }
     void LoadWeapon(){
         
-        int playerType = GameManager.Instance.GetPlayerType();
+        int playerType = gameManager.GetPlayerType();
         
         switch (playerType)
         {
@@ -63,6 +67,16 @@ public class Character : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.OnRefreshPlayerData += ApplyDataFromGameManager;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.OnRefreshPlayerData -= ApplyDataFromGameManager;
     }
 
     public void AddHealth(int amount)
@@ -95,8 +109,18 @@ public class Character : MonoBehaviour
     }
 
     public int GetDamage()
-    {
+    {        
         return stats.TotalStats.attack;
+    }
+
+    public bool GetIsAOE()
+    {
+        return gameManager.playerData.GetIsAOE();
+    }
+
+    public void SetIsAOE(bool status)
+    {
+        gameManager.playerData.SetIsAOE(status);
     }
 
     public void TakeDamage(int damageAmount)
@@ -133,14 +157,16 @@ public class Character : MonoBehaviour
     
     public void ApplyDataFromGameManager()
     {
-        level = GameManager.Instance.playerData.level;
-        exp = GameManager.Instance.playerData.exp;
-        stats = GameManager.Instance.playerData.stats;
+        level = gameManager.playerData.level;
+
+        exp = gameManager.playerData.exp;
+        stats = gameManager.playerData.stats;
+        Debug.Log($"chekc ApplyDataFromGameManager level:{level}");
         
         health = stats.TotalStats.health;
 
         RefreashHealth();
-        StatsRefresh.Refresh(stats.TotalStats);
+        // StatsRefresh.Refresh(stats.TotalStats);
     }
 
     public void SetLevel(int value)

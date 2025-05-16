@@ -141,6 +141,7 @@
     <Compile Include="Assets\Hyper Game\Scripts\UI\BattleSelectController.cs" />
     <Compile Include="Assets\Hyper Game\Scripts\Weapons\Weapons\Bullet\BulletSystem.cs" />
     <Compile Include="Assets\Source\UI Demo\Scripts\PanelControl.cs" />
+    <Compile Include="Assets\Hyper Game\Scripts\UI\UI\CharacterAvatar.cs" />
     <Compile Include="Assets\Hyper Game\Scripts\UI\BlinkEffect.cs" />
     <Compile Include="Assets\Hyper Game\Scripts\Gameplay\Spawners\EnemyCircleSpawner.cs" />
     <Compile Include="Assets\Source\UI Demo\Scripts\PanelView.cs" />

@@ -18,39 +18,6 @@ public class CharacterFireHandler : CharacterWeaponHandler
         InvokeRepeating("AutoFire", 1f, 1f);
     }
 
-    // public void FireSkill()
-    // {
-    //     if (!characterMovement.IsAlive) return;
-    //     if (GameManager.Instance.GetScore() < 20) return;
-
-    //     ScoreEntry scoreEntry = new ScoreEntry(ScoreType.Score, -20);
-    //     GameManager.Instance.AddToScore(scoreEntry);
-
-    //     StartCoroutine(FireMultipleRounds());
-    // }
-
-    // IEnumerator FireMultipleRounds()
-    // {
-    //     for (int i = 0; i < 3; i++)
-    //     {
-    //         FireBurst();
-    //         yield return new WaitForSeconds(0.2f);
-    //     }
-    // }
-
-    // void FireBurst()
-    // {
-    //     float angleStep = 360f / 20;
-    //     float startAngle = 0f;
-    //     spawnAuraEffect();
-    //     for (int i = 0; i < 20; i++)
-    //     {
-    //         float angle = startAngle + (angleStep * i);
-    //         Quaternion bulletRotation = Quaternion.Euler(0, 0, angle);
-    //         bulletSystem.SpawnBullet(bulletRotation);
-    //     }
-    // }
-
     protected void spawnAuraEffect()
     {
         if ( auraEffect !=null)

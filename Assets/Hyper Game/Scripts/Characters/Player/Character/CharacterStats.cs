@@ -99,8 +99,24 @@ public class CharacterStats
         bonusStats.swordSpeed += value;
     }
 
-    public void MapBonusBonusAdd(Attr attack)
+    public void MapBonusAdd(Attr attack)
     {
         mapBonusStats = mapBonusStats + attack;
     }
+
+    public bool ClearMapBonusStat()
+    {
+        mapBonusStats =new Attr(
+            damage: 0,
+            attack: 0,
+            swordAttack: 0,
+            attackSpeed: 0f,
+            swordSpeed: 0f,
+            moveSpeed: 0f,
+            armor: 0,
+            health: 0
+        );
+        return true;
+    }
+
 }

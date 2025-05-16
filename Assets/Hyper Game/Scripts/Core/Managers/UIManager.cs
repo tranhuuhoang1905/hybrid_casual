@@ -57,14 +57,14 @@ public class UIManager : MonoBehaviour
     void OnEnable()
     {
         ScoreEvent.OnScoreUpdated += UpdateScoreUI;
-        ScoreEvent.OnExpUpdated += UpdateExpBarUI;
+        // ScoreEvent.OnExpUpdated += UpdateExpBarUI;
         GameEvents.OnGameOver += ShowWinUI;
     }
 
     void OnDisable()
     {
         ScoreEvent.OnScoreUpdated -= UpdateScoreUI;
-        ScoreEvent.OnExpUpdated -= UpdateExpBarUI;
+        // ScoreEvent.OnExpUpdated -= UpdateExpBarUI;
         GameEvents.OnGameOver -= ShowWinUI;
     }
 

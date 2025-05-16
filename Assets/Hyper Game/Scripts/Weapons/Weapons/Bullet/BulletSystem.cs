@@ -35,6 +35,7 @@ public class BulletSystem : MonoBehaviour
         if (bulletScript != null)
         {
             bulletScript.SetDamage(playerCharacter.GetDamage());
+            bulletScript.SetIsAOE(playerCharacter.GetIsAOE());
         }
     }
 

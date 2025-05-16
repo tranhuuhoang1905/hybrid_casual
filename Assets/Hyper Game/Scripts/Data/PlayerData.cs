@@ -5,8 +5,10 @@ using UnityEngine;
 public class PlayerData
 {
     public int level;
+    public int score;
     public int exp;
     public int applyPoints;
+    public bool isAoe;
     public CharacterStats stats;
 
     private static readonly int[] expToLevelUp = {
@@ -18,8 +20,10 @@ public class PlayerData
     {
         level = 1;
         exp = 0;
+        score = 0;
         applyPoints = 10;
         stats = new CharacterStats(1);
+        isAoe = false;
     }
 
     public void AddExp(int amount)
@@ -66,14 +70,38 @@ public class PlayerData
             default:
                 return false;
         }
-        Debug.Log($"Check UpgradeStat stats.bonusStats.health: {stats.bonusStats.health}");
         applyPoints--;
         return true;
     }
 
+    public void AddScore(int amount)
+    {
+        score += amount;
+    }
+
+    public int GetScore()
+    {
+        return score;
+    }
+
     public bool UpgradeMapBonusStat(Attr attrMapBonus)
     {
-        stats.MapBonusBonusAdd(attrMapBonus);
+        stats.MapBonusAdd(attrMapBonus);
         return true;
+    }
+
+    public bool ClearMapBonus()
+    {
+        isAoe= false;
+        return stats.ClearMapBonusStat();
+    }
+    public bool GetIsAOE()
+    {
+        return isAoe;
+    }
+
+    public void SetIsAOE(bool status)
+    {
+        isAoe = status;
     }
 }

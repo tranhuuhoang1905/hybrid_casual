@@ -7,9 +7,6 @@ using TMPro;
 public class AttrPopup : MonoBehaviour
 {
     // Start is called before the first frame update
-    private int level = 3;
-    private int exp = 0;
-    private int maxExp = 0;
     private int applyPoints = 0;
     [SerializeField] private TextMeshProUGUI health;
     [SerializeField] private TextMeshProUGUI attack;
@@ -18,9 +15,6 @@ public class AttrPopup : MonoBehaviour
     [SerializeField] private TextMeshProUGUI attack_speed;
     [SerializeField] private TextMeshProUGUI bonus_attr_points;
 
-    
-    [SerializeField] private TextMeshProUGUI level_ui;
-    [SerializeField] private Slider slider;
     private CharacterStats stats;
     void Start()
     {
@@ -36,9 +30,6 @@ public class AttrPopup : MonoBehaviour
     public void ApplyDataFromGameManager()
     {
         applyPoints = GameManager.Instance.playerData.applyPoints;
-        level = GameManager.Instance.playerData.level;
-        exp = GameManager.Instance.playerData.exp;
-        maxExp = GameManager.Instance.playerData.GetMaxExp();
         stats = GameManager.Instance.playerData.stats;
     }
 
@@ -51,14 +42,6 @@ public class AttrPopup : MonoBehaviour
         attack_speed.text = stats.TotalStats.attackSpeed.ToString();
         bonus_attr_points.text = applyPoints.ToString();
 
-        level_ui.text = level.ToString();
-        float sliderValue = 1f;
-        if (maxExp != 0)
-        {
-            sliderValue = (float)exp / maxExp; // Ép kiểu float
-            sliderValue = Mathf.Round(sliderValue * 100f) / 100f;
-        }
-        slider.value = sliderValue;
     }
 
     public void OnClickUpgradeStat(string stat)
